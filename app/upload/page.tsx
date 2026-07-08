@@ -1,14 +1,13 @@
 'use client';
 
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { Upload, Image, FileText, X, ArrowRight, Home } from 'lucide-react';
 import { useProject } from '@/context/ProjectContext';
 import { compressImage } from '@/utils/storage';
 import { StepIndicator } from '@/components/StepIndicator';
-
-
 
 export default function UploadPage() {
   const router = useRouter();
@@ -92,44 +91,66 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-[#f0f0f0] font-helvetica">
+      <header className="fixed top-0 left-0 right-0 z-50">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between"
+        >
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-[rgba(30,50,90,0.8)] rounded-lg flex items-center justify-center">
               <Home className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-semibold text-foreground">HomeGPT</span>
+            <span className="text-xl font-semibold text-[#2D2D2D]">HomeGPT</span>
           </Link>
-        </div>
+        </motion.div>
       </header>
 
       <main className="pt-24 pb-20">
         <div className="max-w-4xl mx-auto px-6 py-12">
-          <div className="mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8"
+          >
             <StepIndicator currentStep={1} />
-          </div>
+          </motion.div>
 
-          <div className="text-center mb-12">
-            <h1 className="text-3xl font-semibold text-foreground mb-4">上传你的户型图</h1>
-            <p className="text-muted">支持图片、PDF等格式</p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-center mb-12"
+          >
+            <h1 className="text-[32px] font-semibold text-[#2D2D2D] mb-4">上传你的户型图</h1>
+            <p className="text-[#5E6470] opacity-80">支持图片、PDF等格式</p>
+          </motion.div>
 
           {filename ? (
-            <div className="bg-white rounded-apple shadow-sm border border-border overflow-hidden animate-scaleIn">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              className="bg-white/60 backdrop-blur-xl rounded-[1.5rem] border border-white/20 overflow-hidden"
+            >
               {filename.endsWith('.pdf') ? (
                 <div className="relative p-8 flex flex-col items-center justify-center">
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={handleClear}
                     className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
-                  </button>
-                  <div className="w-20 h-20 bg-orange-100 rounded-2xl flex items-center justify-center mb-4">
-                    <FileText className="w-10 h-10 text-orange-500" />
+                  </motion.button>
+                  <div className="w-20 h-20 bg-[rgba(30,50,90,0.05)] rounded-[1.5rem] flex items-center justify-center mb-4">
+                    <FileText className="w-10 h-10 text-[rgba(30,50,90,0.8)]" />
                   </div>
-                  <p className="text-foreground font-medium">{filename}</p>
-                  <p className="text-muted text-sm mt-1">PDF 文件</p>
+                  <p className="text-[#2D2D2D] font-medium">{filename}</p>
+                  <p className="text-[#5E6470] opacity-60 text-sm mt-1">PDF 文件</p>
                 </div>
               ) : (
                 <div className="relative">
@@ -138,46 +159,55 @@ export default function UploadPage() {
                     alt={filename}
                     className="w-full h-auto max-h-[400px] object-contain"
                   />
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={handleClear}
                     className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
-                  </button>
+                  </motion.button>
                 </div>
               )}
-              <div className="px-6 py-4 border-t border-border flex items-center justify-between">
+              <div className="px-6 py-4 border-t border-[#E5E5EA] flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   {filename.endsWith('.pdf') ? (
-                    <div className="w-6 h-6 bg-orange-100 rounded flex items-center justify-center">
-                      <FileText className="w-4 h-4 text-orange-500" />
+                    <div className="w-6 h-6 bg-[rgba(30,50,90,0.05)] rounded flex items-center justify-center">
+                      <FileText className="w-4 h-4 text-[rgba(30,50,90,0.8)]" />
                     </div>
                   ) : (
-                    <Image className="w-5 h-5 text-muted" />
+                    <Image className="w-5 h-5 text-[#5E6470] opacity-60" />
                   )}
-                  <span className="text-foreground font-medium">{filename}</span>
+                  <span className="text-[#2D2D2D] font-medium">{filename}</span>
                 </div>
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={handleNext}
-                  className="flex items-center gap-2 px-6 py-3 bg-accent text-white rounded-apple font-medium hover:bg-accent/90 transition-colors"
+                  className="flex items-center gap-2 px-6 py-3 bg-[rgba(30,50,90,0.8)] text-white rounded-full font-semibold hover:bg-[rgba(30,50,90,1)] transition-colors"
                 >
+                  <div className="bg-white/20 p-1 rounded-full flex items-center justify-center">
+                    <ArrowRight className="w-5 h-5" />
+                  </div>
                   下一步
-                  <ArrowRight className="w-5 h-5" />
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
           ) : (
-            <div
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
               onDrop={handleDrop}
               onDragOver={(e) => {
                 e.preventDefault();
                 setIsDragging(true);
               }}
               onDragLeave={() => setIsDragging(false)}
-              className={`relative border-2 border-dashed rounded-apple p-16 text-center transition-all duration-200 cursor-pointer ${
+              className={`relative border-2 border-dashed rounded-[1.5rem] p-16 text-center transition-all duration-200 cursor-pointer ${
                 isDragging
-                  ? 'border-accent bg-accent/5'
-                  : 'border-border hover:border-accent/50 hover:bg-gray-50'
+                  ? 'border-[rgba(30,50,90,0.8)] bg-[rgba(30,50,90,0.05)]'
+                  : 'border-[#E5E5EA] hover:border-[rgba(30,50,90,0.5)] hover:bg-white/40'
               }`}
             >
               <input
@@ -186,18 +216,22 @@ export default function UploadPage() {
                 onChange={handleChange}
                 className="absolute inset-0 opacity-0 cursor-pointer"
               />
-              <div className={`w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center transition-colors ${
-                isDragging ? 'bg-accent' : 'bg-gray-100'
-              }`}>
-                <Upload className={`w-10 h-10 ${isDragging ? 'text-white' : 'text-muted'}`} />
-              </div>
+              <motion.div
+                animate={isDragging ? { scale: 1.1 } : { scale: 1 }}
+                transition={{ duration: 0.2 }}
+                className={`w-20 h-20 mx-auto mb-6 rounded-[1.5rem] flex items-center justify-center transition-colors ${
+                  isDragging ? 'bg-[rgba(30,50,90,0.8)]' : 'bg-white/60 backdrop-blur-sm'
+                }`}
+              >
+                <Upload className={`w-10 h-10 ${isDragging ? 'text-white' : 'text-[rgba(30,50,90,0.8)]'}`} />
+              </motion.div>
               <h3 className={`text-xl font-semibold mb-2 transition-colors ${
-                isDragging ? 'text-accent' : 'text-foreground'
+                isDragging ? 'text-[rgba(30,50,90,0.9)]' : 'text-[#2D2D2D]'
               }`}>
                 {isDragging ? '松开上传' : '拖放文件到这里'}
               </h3>
-              <p className="text-muted mb-6">或者点击选择文件</p>
-              <div className="flex items-center justify-center gap-4 text-sm text-muted">
+              <p className="text-[#5E6470] opacity-80 mb-6">或者点击选择文件</p>
+              <div className="flex items-center justify-center gap-4 text-sm text-[#5E6470] opacity-60">
                 <div className="flex items-center gap-1">
                   <Image className="w-4 h-4" />
                   <span>JPG/PNG</span>
@@ -208,17 +242,25 @@ export default function UploadPage() {
                 </div>
               </div>
               {isLoading && (
-                <div className="mt-6 flex items-center justify-center gap-2 text-accent">
-                  <div className="w-5 h-5 border-2 border-accent border-t-transparent rounded-full animate-spin" />
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="mt-6 flex items-center justify-center gap-2 text-[rgba(30,50,90,0.9)]"
+                >
+                  <div className="w-5 h-5 border-2 border-[rgba(30,50,90,0.8)] border-t-transparent rounded-full animate-spin" />
                   <span>处理中...</span>
-                </div>
+                </motion.div>
               )}
               {error && (
-                <div className="mt-4 px-4 py-3 bg-error/10 text-error rounded-lg text-sm">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 px-4 py-3 bg-[#EF4444]/10 text-[#EF4444] rounded-lg text-sm"
+                >
                   {error}
-                </div>
+                </motion.div>
               )}
-            </div>
+            </motion.div>
           )}
         </div>
       </main>

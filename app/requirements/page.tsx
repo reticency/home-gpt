@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { Home, ArrowRight, Users, Wallet, Palette, CheckCircle2, XCircle } from 'lucide-react';
 import { useProject } from '@/context/ProjectContext';
 import { FamilyMemberType, StyleType, RequirementType, type FamilyMember, type UserRequirement } from '@/types';
@@ -51,7 +52,7 @@ export default function RequirementsPage() {
       setSelectedFamily(currentProject.familyMembers);
     }
     if (currentProject.budget > 0) {
-      setBudget(currentProject.budget.toString());
+      setBudget((currentProject.budget / 10000).toString());
     }
     if (currentProject.style) {
       setSelectedStyle(currentProject.style);
@@ -105,50 +106,72 @@ export default function RequirementsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-[#f0f0f0] font-helvetica">
+      <header className="fixed top-0 left-0 right-0 z-50">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between"
+        >
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-[rgba(30,50,90,0.8)] rounded-lg flex items-center justify-center">
               <Home className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-semibold text-foreground">HomeGPT</span>
+            <span className="text-xl font-semibold text-[#2D2D2D]">HomeGPT</span>
           </Link>
-        </div>
+        </motion.div>
       </header>
 
       <main className="pt-24 pb-20">
         <div className="max-w-4xl mx-auto px-6 py-12">
-          <div className="mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8"
+          >
             <StepIndicator currentStep={2} />
-          </div>
+          </motion.div>
 
-          <div className="text-center mb-12">
-            <h1 className="text-3xl font-semibold text-foreground mb-4">告诉我们你的需求</h1>
-            <p className="text-muted">填写以下信息，让 AI 更好地为你设计</p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-center mb-12"
+          >
+            <h1 className="text-[32px] font-semibold text-[#2D2D2D] mb-4">告诉我们你的需求</h1>
+            <p className="text-[#5E6470] opacity-80">填写以下信息，让 AI 更好地为你设计</p>
+          </motion.div>
 
-          <div className="space-y-8">
-            <div className="bg-white rounded-apple shadow-sm border border-border p-6">
+          <div className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="bg-white/60 backdrop-blur-xl rounded-[1.5rem] border border-white/20 p-6"
+            >
               <div className="flex items-center gap-2 mb-4">
-                <Users className="w-5 h-5 text-accent" />
-                <h2 className="text-lg font-semibold text-foreground">家庭成员</h2>
+                <Users className="w-5 h-5 text-[rgba(30,50,90,0.8)]" />
+                <h2 className="text-lg font-semibold text-[#2D2D2D]">家庭成员</h2>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                 {familyOptions.map((option) => {
                   const isSelected = selectedFamily.some((m) => m.type === option.type);
                   return (
-                    <button
+                    <motion.button
                       key={option.type}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       onClick={() => toggleFamily(option.type)}
                       className={`p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center gap-2 ${
                         isSelected
-                          ? 'border-accent bg-accent/5'
-                          : 'border-border hover:border-accent/50'
+                          ? 'border-[rgba(30,50,90,0.8)] bg-[rgba(30,50,90,0.05)]'
+                          : 'border-[#E5E5EA] hover:border-[rgba(30,50,90,0.5)]'
                       }`}
                     >
                       <span className="text-2xl">{option.icon}</span>
-                      <span className={`text-sm font-medium ${isSelected ? 'text-accent' : 'text-foreground'}`}>
+                      <span className={`text-sm font-medium ${isSelected ? 'text-[rgba(30,50,90,0.9)]' : 'text-[#2D2D2D]'}`}>
                         {option.label}
                       </span>
                       {option.hasCount && isSelected && (
@@ -159,7 +182,7 @@ export default function RequirementsPage() {
                               const count = familyCounts[option.type] || 1;
                               if (count > 1) updateFamilyCount(option.type, count - 1);
                             }}
-                            className="w-6 h-6 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-foreground text-sm"
+                            className="w-6 h-6 rounded-full bg-white/80 hover:bg-white flex items-center justify-center text-[#2D2D2D] text-sm"
                           >
                             -
                           </button>
@@ -170,119 +193,147 @@ export default function RequirementsPage() {
                               const count = familyCounts[option.type] || 1;
                               updateFamilyCount(option.type, count + 1);
                             }}
-                            className="w-6 h-6 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-foreground text-sm"
+                            className="w-6 h-6 rounded-full bg-white/80 hover:bg-white flex items-center justify-center text-[#2D2D2D] text-sm"
                           >
                             +
                           </button>
                         </div>
                       )}
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-white rounded-apple shadow-sm border border-border p-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="bg-white/60 backdrop-blur-xl rounded-[1.5rem] border border-white/20 p-6"
+            >
               <div className="flex items-center gap-2 mb-4">
-                <Wallet className="w-5 h-5 text-accent" />
-                <h2 className="text-lg font-semibold text-foreground">预算</h2>
+                <Wallet className="w-5 h-5 text-[rgba(30,50,90,0.8)]" />
+                <h2 className="text-lg font-semibold text-[#2D2D2D]">预算</h2>
               </div>
               <div className="relative max-w-xs">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted">¥</span>
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5E6470] opacity-60">¥</span>
                 <input
                   type="number"
                   value={budget}
                   onChange={(e) => setBudget(e.target.value)}
                   placeholder="请输入预算（万元）"
-                  className="w-full pl-8 pr-4 py-4 text-xl font-semibold border-2 border-border rounded-xl focus:border-accent focus:outline-none transition-colors"
+                  className="w-full pl-8 pr-4 py-4 text-xl font-semibold border-2 border-[#E5E5EA] rounded-xl focus:border-[rgba(30,50,90,0.8)] focus:outline-none transition-colors bg-white/40"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted">万元</span>
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[#5E6470] opacity-60">万元</span>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-white rounded-apple shadow-sm border border-border p-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="bg-white/60 backdrop-blur-xl rounded-[1.5rem] border border-white/20 p-6"
+            >
               <div className="flex items-center gap-2 mb-4">
-                <Palette className="w-5 h-5 text-accent" />
-                <h2 className="text-lg font-semibold text-foreground">装修风格</h2>
+                <Palette className="w-5 h-5 text-[rgba(30,50,90,0.8)]" />
+                <h2 className="text-lg font-semibold text-[#2D2D2D]">装修风格</h2>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {styleOptions.map((option) => (
-                  <button
+                  <motion.button
                     key={option.type}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => setSelectedStyle(option.type)}
                     className={`p-4 rounded-xl border-2 transition-all duration-200 text-left ${
                       selectedStyle === option.type
-                        ? 'border-accent bg-accent/5'
-                        : 'border-border hover:border-accent/50'
+                        ? 'border-[rgba(30,50,90,0.8)] bg-[rgba(30,50,90,0.05)]'
+                        : 'border-[#E5E5EA] hover:border-[rgba(30,50,90,0.5)]'
                     }`}
                   >
-                    <div className={`text-sm font-semibold mb-1 ${selectedStyle === option.type ? 'text-accent' : 'text-foreground'}`}>
+                    <div className={`text-sm font-semibold mb-1 ${selectedStyle === option.type ? 'text-[rgba(30,50,90,0.9)]' : 'text-[#2D2D2D]'}`}>
                       {option.label}
                     </div>
-                    <div className="text-xs text-muted">{option.description}</div>
-                  </button>
+                    <div className="text-xs text-[#5E6470] opacity-60">{option.description}</div>
+                  </motion.button>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-white rounded-apple shadow-sm border border-border p-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="bg-white/60 backdrop-blur-xl rounded-[1.5rem] border border-white/20 p-6"
+            >
               <div className="flex items-center gap-2 mb-4">
-                <CheckCircle2 className="w-5 h-5 text-accent" />
-                <h2 className="text-lg font-semibold text-foreground">核心需求</h2>
+                <CheckCircle2 className="w-5 h-5 text-[rgba(30,50,90,0.8)]" />
+                <h2 className="text-lg font-semibold text-[#2D2D2D]">核心需求</h2>
               </div>
               <div className="flex flex-wrap gap-3">
                 {requirementOptions.map((option) => {
                   const isSelected = selectedRequirements.some((r) => r.type === option.type);
                   return (
-                    <button
+                    <motion.button
                       key={option.type}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       onClick={() => toggleRequirement(option.type)}
                       className={`px-6 py-3 rounded-full border-2 transition-all duration-200 ${
                         isSelected
-                          ? 'border-accent bg-accent text-white'
-                          : 'border-border hover:border-accent/50 text-foreground'
+                          ? 'border-[rgba(30,50,90,0.8)] bg-[rgba(30,50,90,0.8)] text-white'
+                          : 'border-[#E5E5EA] hover:border-[rgba(30,50,90,0.5)] text-[#2D2D2D]'
                       }`}
                     >
                       {option.label}
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
-            </div>
+            </motion.div>
           </div>
 
-          <div className="mt-12 flex items-center justify-between">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="mt-12 flex items-center justify-between"
+          >
             <div className="flex items-center gap-4 text-sm">
-              <div className={`flex items-center gap-1 ${selectedFamily.length > 0 ? 'text-success' : 'text-muted'}`}>
+              <div className={`flex items-center gap-1 ${selectedFamily.length > 0 ? 'text-[#22C55E]' : 'text-[#5E6470] opacity-60'}`}>
                 {selectedFamily.length > 0 ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
                 <span>家庭成员</span>
               </div>
-              <div className={`flex items-center gap-1 ${parseFloat(budget) > 0 ? 'text-success' : 'text-muted'}`}>
+              <div className={`flex items-center gap-1 ${parseFloat(budget) > 0 ? 'text-[#22C55E]' : 'text-[#5E6470] opacity-60'}`}>
                 {parseFloat(budget) > 0 ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
                 <span>预算</span>
               </div>
-              <div className={`flex items-center gap-1 ${selectedStyle ? 'text-success' : 'text-muted'}`}>
+              <div className={`flex items-center gap-1 ${selectedStyle ? 'text-[#22C55E]' : 'text-[#5E6470] opacity-60'}`}>
                 {selectedStyle ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
                 <span>风格</span>
               </div>
-              <div className={`flex items-center gap-1 ${selectedRequirements.length > 0 ? 'text-success' : 'text-muted'}`}>
+              <div className={`flex items-center gap-1 ${selectedRequirements.length > 0 ? 'text-[#22C55E]' : 'text-[#5E6470] opacity-60'}`}>
                 {selectedRequirements.length > 0 ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
                 <span>需求</span>
               </div>
             </div>
-            <button
+            <motion.button
+              whileHover={isValid() ? { scale: 1.02 } : {}}
+              whileTap={isValid() ? { scale: 0.98 } : {}}
               onClick={handleNext}
               disabled={!isValid()}
-              className={`flex items-center gap-2 px-8 py-4 rounded-apple font-semibold text-lg transition-all duration-200 ${
+              className={`flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-200 ${
                 isValid()
-                  ? 'bg-accent text-white hover:bg-accent/90 shadow-lg shadow-accent/20'
+                  ? 'bg-[rgba(30,50,90,0.8)] text-white hover:bg-[rgba(30,50,90,1)]'
                   : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
             >
+              <div className="bg-white/20 p-1.5 rounded-full flex items-center justify-center">
+                <ArrowRight className="w-5 h-5" />
+              </div>
               开始分析
-              <ArrowRight className="w-5 h-5" />
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </div>
       </main>
     </div>

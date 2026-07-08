@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "framer-motion": "^12.42.2",
     "lucide-react": "^0.290.0",
     "next": "^14.2.5",
     "openai": "^6.45.0",
