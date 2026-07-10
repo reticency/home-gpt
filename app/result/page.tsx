@@ -138,7 +138,7 @@ export default function ResultPage() {
       });
       const data = await response.json();
       if (data.success && data.result) {
-        setRenderings(prev => prev.map(r => 
+        setRenderingsState(prev => prev.map(r => 
           r.area === area ? { ...r, ...data.result } : r
         ));
       }
@@ -361,7 +361,9 @@ ${imagesSection ? '## 六、设计效果图\n' + imagesSection : ''}
     return null;
   }
 
-  const { floorPlanAnalysis, familyPlanAnalysis, decisionAnalysis, renderings } = analysisResult;
+  const { floorPlanAnalysis, familyPlanAnalysis, decisionAnalysis, renderings: initialRenderings } = analysisResult;
+  const [renderingsState, setRenderingsState] = useState(initialRenderings || []);
+  const renderings = renderingsState;
   
   const fpAnalysis = {
     structure: typeof floorPlanAnalysis?.structure === 'string' ? floorPlanAnalysis.structure : '',
