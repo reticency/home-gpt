@@ -901,11 +901,10 @@ ${imagesSection ? '## 六、设计效果图\n' + imagesSection : ''}
                   <div key={index} className="relative">
                     <div className="aspect-video rounded-lg overflow-hidden bg-gray-100">
                       {rendering.status === 'generated' && rendering.imageUrl ? (
-                        <Image
+                        <img
                           src={rendering.imageUrl}
                           alt={rendering.area}
-                          fill
-                          className="object-cover"
+                          className="w-full h-full object-cover"
                         />
                       ) : rendering.status === 'generating' ? (
                         <div className="w-full h-full flex items-center justify-center">
