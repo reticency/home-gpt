@@ -884,7 +884,7 @@ ${imagesSection ? '## 六、设计效果图\n' + imagesSection : ''}
                   <div className="space-y-2">
                     {fpAnalysis3.timeline.milestones.map((m, i) => (
                       <div key={i} className="flex items-center justify-between text-sm">
-                        <span className="text-[#374151]">{m.milestone}</span>
+                        <span className="text-[#374151]">{m.event}</span>
                         <span className="text-[#5E6470]">{m.date}</span>
                       </div>
                     ))}

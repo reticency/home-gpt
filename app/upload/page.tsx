@@ -51,10 +51,11 @@ export default function UploadPage() {
         previewBase64 = '';
       }
 
+      const floorPlanType: 'image' | 'pdf' | 'screenshot' = file.type.startsWith('image/') ? 'image' : 'pdf';
       const floorPlan = {
         base64: storageBase64,
         filename: file.name,
-        type: file.type.startsWith('image/') ? 'image' : 'pdf' as const,
+        type: floorPlanType,
         size: file.size,
       };
 
@@ -155,7 +156,7 @@ export default function UploadPage() {
               ) : (
                 <div className="relative">
                   <img
-                    src={preview}
+                    src={preview || undefined}
                     alt={filename}
                     className="w-full h-auto max-h-[400px] object-contain"
                   />

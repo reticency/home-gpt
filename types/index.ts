@@ -171,6 +171,7 @@ export interface DecisionAnalysis {
     currency: string;
     breakdown: {
       category: string;
+      description: string;
       amount: number;
       percentage: number;
       items: {
@@ -220,7 +221,8 @@ export interface RenderingImage {
   area: string;
   imageUrl: string;
   prompt: string;
-  status: 'pending' | 'generated' | 'failed';
+  style: string;
+  status: 'pending' | 'generating' | 'generated' | 'failed';
   generatedAt?: number;
 }
 

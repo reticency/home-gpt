@@ -71,13 +71,15 @@ export default function AnalyzingPage() {
       if (data.success) {
         const result = data.result;
         
+        const style = currentProject?.style || 'modern';
         const styleName = {
           wood: '原木风格',
           modern: '现代简约风格',
           nordic: '北欧风格',
           chinese: '新中式风格',
           luxury: '轻奢风格',
-        }[currentProject?.style] || '现代简约风格';
+          japanese: '日式风格',
+        }[style];
 
         const areas = [
           { area: '客厅', prompt: `${styleName}客厅，宽敞明亮，舒适的沙发，精致的茶几，装饰画，绿植，温暖的灯光，高品质装修` },

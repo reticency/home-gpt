@@ -107,7 +107,11 @@ function normalizeFamilyPlanAnalysis(data: unknown): FamilyPlanAnalysis {
       flexibilityRequirements: Array.isArray(d.growthPlanning.flexibilityRequirements) ? d.growthPlanning.flexibilityRequirements : [],
       futureChanges: Array.isArray(d.growthPlanning.futureChanges) ? d.growthPlanning.futureChanges : [],
     } : { childSpace: false, childAgeRange: '', agingConsideration: false, flexibilityRequirements: [], futureChanges: [] },
-    roomLayoutSuggestions: Array.isArray(d.roomLayoutSuggestions) ? d.roomLayoutSuggestions : [],
+    spaceRecommendations: typeof d.spaceRecommendations === 'object' && d.spaceRecommendations ? {
+      functionalZones: Array.isArray(d.spaceRecommendations.functionalZones) ? d.spaceRecommendations.functionalZones : [],
+      roomLayoutSuggestions: Array.isArray(d.spaceRecommendations.roomLayoutSuggestions) ? d.spaceRecommendations.roomLayoutSuggestions : [],
+      multiPurposeSpaces: Array.isArray(d.spaceRecommendations.multiPurposeSpaces) ? d.spaceRecommendations.multiPurposeSpaces : [],
+    } : { functionalZones: [], roomLayoutSuggestions: [], multiPurposeSpaces: [] },
   };
 }
 
@@ -125,6 +129,7 @@ function normalizeDecisionAnalysis(data: unknown, budget: number): DecisionAnaly
   
   const breakdown = Array.isArray(d.costEstimation?.breakdown) ? d.costEstimation.breakdown.map(cat => ({
     category: cat?.category || '',
+    description: cat?.description || '',
     amount: parseNumber(cat?.amount),
     percentage: parseNumber(cat?.percentage),
     items: Array.isArray(cat?.items) ? cat.items.map(item => ({
@@ -384,6 +389,7 @@ async function getMockDecisionAnalysis(budget: number): Promise<DecisionAnalysis
       breakdown: [
         {
           category: '基础工程',
+          description: '水电改造、防水、墙体拆改等',
           amount: Math.floor(budget * 0.35),
           percentage: 35,
           items: [
@@ -395,6 +401,7 @@ async function getMockDecisionAnalysis(budget: number): Promise<DecisionAnalysis
         },
         {
           category: '硬装材料',
+          description: '瓷砖、木地板、乳胶漆等',
           amount: Math.floor(budget * 0.25),
           percentage: 25,
           items: [
@@ -406,6 +413,7 @@ async function getMockDecisionAnalysis(budget: number): Promise<DecisionAnalysis
         },
         {
           category: '定制柜体',
+          description: '橱柜、衣柜、玄关柜等',
           amount: Math.floor(budget * 0.2),
           percentage: 20,
           items: [
@@ -417,6 +425,7 @@ async function getMockDecisionAnalysis(budget: number): Promise<DecisionAnalysis
         },
         {
           category: '软装家具',
+          description: '沙发、床、餐桌椅等',
           amount: Math.floor(budget * 0.12),
           percentage: 12,
           items: [
@@ -428,6 +437,7 @@ async function getMockDecisionAnalysis(budget: number): Promise<DecisionAnalysis
         },
         {
           category: '家电设备',
+          description: '空调、洗衣机、热水器等',
           amount: Math.floor(budget * 0.08),
           percentage: 8,
           items: [
@@ -598,6 +608,7 @@ function getMockRenderings(): RenderingImage[] {
       area: '客厅',
       imageUrl: 'https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=800&h=600&fit=crop',
       prompt: '现代简约风格客厅，落地窗，灰色布艺沙发，原木茶几，绿植装饰，明亮通透，阳光充足',
+      style: '现代简约风格',
       status: 'generated',
       generatedAt: Date.now(),
     },
@@ -605,6 +616,7 @@ function getMockRenderings(): RenderingImage[] {
       area: '厨房',
       imageUrl: 'https://images.unsplash.com/photo-1566753295584-4c424787a8a7?w=800&h=600&fit=crop',
       prompt: '现代简约风格厨房，U型操作台，白色橱柜，灰色瓷砖，嵌入式电器，整洁明亮',
+      style: '现代简约风格',
       status: 'generated',
       generatedAt: Date.now(),
     },
@@ -612,6 +624,7 @@ function getMockRenderings(): RenderingImage[] {
       area: '卧室',
       imageUrl: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=600&fit=crop',
       prompt: '现代简约风格卧室，1.8米大床，灰色床头背景墙，原木衣柜，温馨柔和的灯光',
+      style: '现代简约风格',
       status: 'generated',
       generatedAt: Date.now(),
     },
@@ -619,6 +632,7 @@ function getMockRenderings(): RenderingImage[] {
       area: '卫生间',
       imageUrl: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop',
       prompt: '现代简约风格卫生间，干湿分离，白色瓷砖，智能马桶，淋浴区玻璃隔断',
+      style: '现代简约风格',
       status: 'generated',
       generatedAt: Date.now(),
     },
