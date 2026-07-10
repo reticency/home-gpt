@@ -76,7 +76,7 @@ function PhaseTimeline({ phases }: { phases: Array<{ phase: number; name: string
   return (
     <div className="relative">
       {phases.map((phase, index) => (
-        <div key={phase.phase} className="flex gap-4 pb-6 last:pb-0">
+        <div key={`${phase.phase}-${index}`} className="flex gap-4 pb-6 last:pb-0">
           <div className="flex flex-col items-center">
             <div className="w-10 h-10 rounded-full bg-[rgba(30,50,90,0.8)] text-white flex items-center justify-center font-bold text-sm">
               {phase.phase}
@@ -137,7 +137,10 @@ export default function ResultPage() {
         body: JSON.stringify({ prompt, area }),
       });
       const data = await response.json();
-      if (data.success) {
+      if (data.success && data.result) {
+        setRenderings(prev => prev.map(r => 
+          r.area === area ? { ...r, ...data.result } : r
+        ));
       }
     } catch (error) {
       console.error('Image regeneration failed:', error);
