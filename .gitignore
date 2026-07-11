@@ -17,3 +17,7 @@ Thumbs.db
 
 dist/
 build/
+
+# Cloudflare
+.dev.vars
+.dev.vars.*
