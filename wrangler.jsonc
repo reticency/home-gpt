@@ -1,5 +1,10 @@
 {
   "name": "home-gpt",
+  "compatibility_date": "2026-07-11",
+  "main": ".open-next/worker.js",
+  "assets": {
+    "directory": ".open-next/assets"
+  },
   "vars": {
     "USE_AI": "true",
     "ARK_API_KEY": "4de96b4f-14f0-4dc3-9cfb-4294927f9d6e",
