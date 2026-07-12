@@ -606,7 +606,7 @@ function getMockRenderings(): RenderingImage[] {
   return [
     {
       area: '客厅',
-      imageUrl: 'https://images.unsplash.com/photo-1487750516970-591746d5472e?w=800&h=600&fit=crop',
+      imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
       prompt: '现代简约风格客厅，灰色布艺沙发，原木茶几，装饰画，绿植，明亮通透',
       style: '现代简约风格',
       status: 'generated',
@@ -614,7 +614,7 @@ function getMockRenderings(): RenderingImage[] {
     },
     {
       area: '厨房',
-      imageUrl: 'https://images.unsplash.com/photo-1541529247363-b9f752f2a67a?w=800&h=600&fit=crop',
+      imageUrl: 'https://images.unsplash.com/photo-1517732306149-e8f829eb588a?w=800&h=600&fit=crop',
       prompt: '现代简约风格厨房，白色橱柜，大理石台面，嵌入式电器，整洁明亮',
       style: '现代简约风格',
       status: 'generated',
@@ -622,7 +622,7 @@ function getMockRenderings(): RenderingImage[] {
     },
     {
       area: '卧室',
-      imageUrl: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop',
+      imageUrl: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&h=600&fit=crop',
       prompt: '现代简约风格卧室，1.8米大床，灰色床头背景墙，原木床头柜，温馨柔和的灯光',
       style: '现代简约风格',
       status: 'generated',
@@ -630,7 +630,7 @@ function getMockRenderings(): RenderingImage[] {
     },
     {
       area: '卫生间',
-      imageUrl: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop',
+      imageUrl: 'https://images.unsplash.com/photo-1503602642458-232111445657?w=800&h=600&fit=crop',
       prompt: '现代简约风格卫生间，干湿分离，白色瓷砖，玻璃淋浴隔断，智能马桶',
       style: '现代简约风格',
       status: 'generated',
