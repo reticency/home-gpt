@@ -653,64 +653,68 @@ export async function POST(request: NextRequest) {
       requirementsCount: Array.isArray(requirements) ? requirements.length : 0,
     });
 
-    if (!process.env.ARK_API_KEY) {
-      console.error('ARK_API_KEY not configured');
-      return NextResponse.json({ success: false, error: 'API密钥未配置' }, { status: 500 });
-    }
+    const useAI = process.env.USE_AI === 'true' && !!process.env.ARK_API_KEY;
 
     let floorPlanAnalysis: FloorPlanAnalysis;
     let familyPlanAnalysis: FamilyPlanAnalysis;
     let decisionAnalysis: DecisionAnalysis;
 
-    const doubao = new DoubaoAPI();
-      
-    if (imageBase64 && imageBase64.startsWith('data:')) {
-      try {
-        const floorPlanResult = await doubao.analyzeFloorPlan(
-          imageBase64,
-          { familyMembers, style, requirements }
-        );
-        const floorPlanData = parseJSONSafely(floorPlanResult);
-        floorPlanAnalysis = normalizeFloorPlanAnalysis(floorPlanData);
-        console.log('Floor plan analysis completed');
-      } catch (error) {
-        console.error('Floor plan analysis failed:', error);
+    if (useAI) {
+      const doubao = new DoubaoAPI();
+
+      if (imageBase64 && imageBase64.startsWith('data:')) {
+        try {
+          const floorPlanResult = await doubao.analyzeFloorPlan(
+            imageBase64,
+            { familyMembers, style, requirements }
+          );
+          const floorPlanData = parseJSONSafely(floorPlanResult);
+          floorPlanAnalysis = normalizeFloorPlanAnalysis(floorPlanData);
+          console.log('Floor plan analysis completed');
+        } catch (error) {
+          console.error('Floor plan analysis failed:', error);
+          floorPlanAnalysis = await getMockFloorPlanAnalysis();
+          console.log('Using mock floor plan analysis');
+        }
+      } else {
         floorPlanAnalysis = await getMockFloorPlanAnalysis();
-        console.log('Using mock floor plan analysis');
+      }
+
+      try {
+        const familyResult = await doubao.analyzeFamilyPlan(
+          familyMembers,
+          { rooms: floorPlanAnalysis.roomCount || 5, area: floorPlanAnalysis.area || 120, structure: floorPlanAnalysis.structure || '三室两厅一卫' },
+          requirements
+        );
+        const familyData = parseJSONSafely(familyResult);
+        familyPlanAnalysis = normalizeFamilyPlanAnalysis(familyData);
+        console.log('Family plan analysis completed');
+      } catch (error) {
+        console.error('Family plan analysis failed:', error);
+        familyPlanAnalysis = await getMockFamilyPlanAnalysis(familyMembers, requirements);
+        console.log('Using mock family plan analysis');
+      }
+
+      try {
+        const decisionResult = await doubao.analyzeDecision(
+          JSON.stringify(floorPlanAnalysis),
+          JSON.stringify(familyPlanAnalysis),
+          budget,
+          styleMap[style] || style
+        );
+        const decisionData = parseJSONSafely(decisionResult);
+        decisionAnalysis = normalizeDecisionAnalysis(decisionData, budget);
+        console.log('Decision analysis completed');
+      } catch (error) {
+        console.error('Decision analysis failed:', error);
+        decisionAnalysis = await getMockDecisionAnalysis(budget);
+        console.log('Using mock decision analysis');
       }
     } else {
+      console.log('AI not configured, using mock data');
       floorPlanAnalysis = await getMockFloorPlanAnalysis();
-    }
-
-    try {
-      const familyResult = await doubao.analyzeFamilyPlan(
-        familyMembers,
-        { rooms: floorPlanAnalysis.roomCount || 5, area: floorPlanAnalysis.area || 120, structure: floorPlanAnalysis.structure || '三室两厅一卫' },
-        requirements
-      );
-      const familyData = parseJSONSafely(familyResult);
-      familyPlanAnalysis = normalizeFamilyPlanAnalysis(familyData);
-      console.log('Family plan analysis completed');
-    } catch (error) {
-      console.error('Family plan analysis failed:', error);
       familyPlanAnalysis = await getMockFamilyPlanAnalysis(familyMembers, requirements);
-      console.log('Using mock family plan analysis');
-    }
-
-    try {
-      const decisionResult = await doubao.analyzeDecision(
-        JSON.stringify(floorPlanAnalysis),
-        JSON.stringify(familyPlanAnalysis),
-        budget,
-        styleMap[style] || style
-      );
-      const decisionData = parseJSONSafely(decisionResult);
-      decisionAnalysis = normalizeDecisionAnalysis(decisionData, budget);
-      console.log('Decision analysis completed');
-    } catch (error) {
-      console.error('Decision analysis failed:', error);
       decisionAnalysis = await getMockDecisionAnalysis(budget);
-      console.log('Using mock decision analysis');
     }
 
     const result: AnalysisResult = {
