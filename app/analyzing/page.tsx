@@ -88,6 +88,15 @@ export default function AnalyzingPage() {
           { area: '卫生间', prompt: `${styleName}卫生间，干湿分离，整洁的瓷砖，现代卫浴设施，镜子，收纳柜` },
         ];
 
+        const mockImages: Record<string, string> = {
+          客厅: 'https://images.unsplash.com/photo-1493606374479-45b9b7f6477a?w=800&h=600&fit=crop',
+          厨房: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop',
+          卧室: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop',
+          卫生间: 'https://images.unsplash.com/photo-1526045431048-f85818401258?w=800&h=600&fit=crop',
+        };
+
+        result.renderings = [];
+
         for (const item of areas) {
           try {
             const imgRes = await fetch('/api/generate/image', {
@@ -101,21 +110,21 @@ export default function AnalyzingPage() {
             });
             const imgData = await imgRes.json();
             if (imgData.success && imgData.result?.imageUrl) {
-              result.renderings = result.renderings || [];
               result.renderings.push({
                 area: item.area,
                 imageUrl: imgData.result.imageUrl,
                 prompt: item.prompt,
+                style: styleName || '现代简约风格',
                 status: 'generated' as const,
                 generatedAt: Date.now(),
               });
             }
           } catch {
-            result.renderings = result.renderings || [];
             result.renderings.push({
               area: item.area,
-              imageUrl: `https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=800&h=600&fit=crop`,
+              imageUrl: mockImages[item.area] || mockImages['客厅'],
               prompt: item.prompt,
+              style: styleName || '现代简约风格',
               status: 'generated' as const,
               generatedAt: Date.now(),
             });

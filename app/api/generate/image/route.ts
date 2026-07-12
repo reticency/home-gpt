@@ -31,10 +31,10 @@ export async function POST(request: NextRequest) {
       });
     } else {
       const mockImages: Record<string, string> = {
-        客厅: 'https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=800&h=600&fit=crop',
-        厨房: 'https://images.unsplash.com/photo-1566753295584-4c424787a8a7?w=800&h=600&fit=crop',
-        卧室: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=600&fit=crop',
-        卫生间: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop',
+        客厅: 'https://images.unsplash.com/photo-1493606374479-45b9b7f6477a?w=800&h=600&fit=crop',
+        厨房: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop',
+        卧室: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop',
+        卫生间: 'https://images.unsplash.com/photo-1526045431048-f85818401258?w=800&h=600&fit=crop',
         餐厅: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=800&h=600&fit=crop',
         书房: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=800&h=600&fit=crop',
       };
