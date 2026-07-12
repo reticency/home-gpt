@@ -117,6 +117,9 @@ export default function ResultPage() {
   const { currentProject, analysisResult, resetProject } = useProject();
   const [regeneratingArea, setRegeneratingArea] = useState<string | null>(null);
 
+  const { floorPlanAnalysis, familyPlanAnalysis, decisionAnalysis, renderings: initialRenderings } = analysisResult || {};
+  const [renderingsState, setRenderingsState] = useState(initialRenderings || []);
+
   useEffect(() => {
     if (!currentProject || !analysisResult) {
       router.push('/upload');
@@ -360,9 +363,6 @@ ${imagesSection ? '## 六、设计效果图\n' + imagesSection : ''}
   if (!currentProject || !analysisResult) {
     return null;
   }
-
-  const { floorPlanAnalysis, familyPlanAnalysis, decisionAnalysis, renderings: initialRenderings } = analysisResult;
-  const [renderingsState, setRenderingsState] = useState(initialRenderings || []);
   const renderings = renderingsState;
   
   const fpAnalysis = {

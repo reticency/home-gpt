@@ -614,7 +614,7 @@ function getMockRenderings(): RenderingImage[] {
     },
     {
       area: '厨房',
-      imageUrl: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?ixlib=rb-4.0.3&w=800&h=600&fit=crop',
+      imageUrl: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?ixlib=rb-4.0.3&w=800&h=600&fit=crop',
       prompt: '现代简约风格厨房，白色橱柜，大理石台面，嵌入式电器，整洁明亮',
       style: '现代简约风格',
       status: 'generated',
@@ -630,8 +630,8 @@ function getMockRenderings(): RenderingImage[] {
     },
     {
       area: '卫生间',
-      imageUrl: 'https://images.unsplash.com/photo-1526045431048-f85818401258?ixlib=rb-4.0.3&w=800&h=600&fit=crop',
-      prompt: '现代简约风格卫生间，干湿分离，白色瓷砖，玻璃淋浴隔断，智能马桶',
+      imageUrl: 'https://plus.unsplash.com/premium_photo-1661902468735-eabf780f8ff6?ixlib=rb-4.0.3&w=800&h=600&fit=crop',
+      prompt: '现代简约风格卫生间，干净整洁，白色瓷砖',
       style: '现代简约风格',
       status: 'generated',
       generatedAt: Date.now(),

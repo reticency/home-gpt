@@ -32,9 +32,9 @@ export async function POST(request: NextRequest) {
     } else {
       const mockImages: Record<string, string> = {
         客厅: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&w=800&h=600&fit=crop',
-        厨房: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?ixlib=rb-4.0.3&w=800&h=600&fit=crop',
+        厨房: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?ixlib=rb-4.0.3&w=800&h=600&fit=crop',
         卧室: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&h=600&fit=crop',
-        卫生间: 'https://images.unsplash.com/photo-1526045431048-f85818401258?ixlib=rb-4.0.3&w=800&h=600&fit=crop',
+        卫生间: 'https://plus.unsplash.com/premium_photo-1661902468735-eabf780f8ff6?ixlib=rb-4.0.3&w=800&h=600&fit=crop',
         餐厅: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-4.0.3&w=800&h=600&fit=crop',
         书房: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&w=800&h=600&fit=crop',
       };
