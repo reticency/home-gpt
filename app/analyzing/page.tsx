@@ -89,10 +89,10 @@ export default function AnalyzingPage() {
         ];
 
         const mockImages: Record<string, string> = {
-          客厅: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
-          厨房: 'https://images.unsplash.com/photo-1517732306149-e8f829eb588a?w=800&h=600&fit=crop',
+          客厅: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&w=800&h=600&fit=crop',
+          厨房: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?ixlib=rb-4.0.3&w=800&h=600&fit=crop',
           卧室: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&h=600&fit=crop',
-          卫生间: 'https://images.unsplash.com/photo-1503602642458-232111445657?w=800&h=600&fit=crop',
+          卫生间: 'https://images.unsplash.com/photo-1526045431048-f85818401258?ixlib=rb-4.0.3&w=800&h=600&fit=crop',
         };
 
         result.renderings = [];
